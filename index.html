@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice Geral - História Promover</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- VARIÁVEIS DE TEMA --- */
+        :root {
+            --bg-color: #F8F9FA;
+            --text-color: #2D3748;
+            --border-color: #000000;
+            --white: #FFFFFF;
+
+            /* Cores das Categorias - Tema História */
+            --color-base: #8D6E63; /* Sépia/Marrom Claro - Antiguidade/Base */
+            --bg-base: #D7CCC8;
+
+            --color-brasil: #558B2F; /* Verde Terroso - Formação do Brasil */
+            --bg-brasil: #DCEDC8;
+
+            --color-repub: #1565C0; /* Azul Forte - República */
+            --bg-repub: #BBDEFB;
+
+            --color-revol: #C62828; /* Vermelho Escuro - Revoluções */
+            --bg-revol: #FFCDD2;
+
+            --color-mundo: #455A64; /* Chumbo - Mundo Contemporâneo */
+            --bg-mundo: #CFD8DC;
+
+            --color-ceara: #EF6C00; /* Laranja Ocre - Ceará/Nordeste */
+            --bg-ceara: #FFE0B2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        .logo-header {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0 20px 0; 
+        }
+        .logo-img {
+            max-height: 130px; 
+            width: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            text-align: center;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* --- BARRA DE PESQUISA --- */
+        .search-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            box-shadow: 4px 4px 0px var(--border-color);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .search-input:focus {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        /* --- BADGES DE CATEGORIA --- */
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .badge {
+            padding: 8px 16px;
+            color: white;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        }
+        .badge-base { background-color: var(--color-base); }
+        .badge-brasil { background-color: var(--color-brasil); }
+        .badge-repub { background-color: var(--color-repub); }
+        .badge-revol { background-color: var(--color-revol); }
+        .badge-mundo { background-color: var(--color-mundo); }
+        .badge-ceara { background-color: var(--color-ceara); }
+
+        /* --- BOTÕES DOS TÓPICOS --- */
+        .topic-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 16px 20px;
+            background-color: var(--white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 4px 4px 0px var(--border-color);
+            transition: all 0.1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--border-color);
+            background-color: #FAFAFA;
+        }
+
+        .topic-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px var(--border-color);
+        }
+
+        .topic-btn::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            border-right: 2px solid var(--border-color);
+        }
+
+        /* Cores das laterais por categoria */
+        .btn-base::before { background-color: var(--bg-base); }
+        .btn-brasil::before { background-color: var(--bg-brasil); }
+        .btn-repub::before { background-color: var(--bg-repub); }
+        .btn-revol::before { background-color: var(--bg-revol); }
+        .btn-mundo::before { background-color: var(--bg-mundo); }
+        .btn-ceara::before { background-color: var(--bg-ceara); }
+
+        .arrow { font-weight: 900; color: #CBD5E0; }
+        .topic-btn:hover .arrow { color: var(--text-color); }
+
+        /* Mensagem de Não Encontrado */
+        #no-results {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+            font-weight: 600;
+            display: none;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-header">
+        <img src="logo.png" alt="Logo Promover" class="logo-img">
+    </div>
+
+    <div class="container">
+        <h1>Índice Geral História</h1>
+        <p class="subtitle">Foco Estratégico IFCE</p>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar conteúdo de História...">
+        </div>
+
+        <!-- MÓDULO 1: A BASE DA SOCIEDADE -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-base">🏛️ A Base da Sociedade</span></div>
+            <a href="patrimonio-memoria.html" class="topic-btn btn-base">Patrimônio, Memória e Tempo <span class="arrow">➜</span></a>
+            <a href="grecia-roma-cidadania.html" class="topic-btn btn-base">Grécia e Roma: Cidadania e Legado <span class="arrow">➜</span></a>
+            <a href="feudalismo-transicao.html" class="topic-btn btn-base">Feudalismo e o Renascimento Comercial <span class="arrow">➜</span></a>
+        </div>
+
+        <!-- MÓDULO 2: A FORMAÇÃO DO BRASIL -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-brasil">🇧🇷 A Formação do Brasil</span></div>
+            <a href="indigenas-africanos.html" class="topic-btn btn-brasil">Povos Indígenas e Reinos Africanos (Pré-1500) <span class="arrow">➜</span></a>
+            <a href="invasao-colonia.html" class="topic-btn btn-brasil">A Invasão e a Lógica Colonial <span class="arrow">➜</span></a>
+            <a href="escravidao-quilombos.html" class="topic-btn btn-brasil">Escravidão e Resistência (Quilombos) <span class="arrow">➜</span></a>
+            <a href="independencia-imperio.html" class="topic-btn btn-brasil">Independência e Brasil Império <span class="arrow">➜</span></a>
+        </div>
+
+        <!-- MÓDULO 3: A REPÚBLICA BRASILEIRA -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-repub">🗳️ A República Brasileira</span></div>
+            <a href="republica-velha.html" class="topic-btn btn-repub">República Velha e Coronelismo <span class="arrow">➜</span></a>
+            <a href="era-vargas.html" class="topic-btn btn-repub">A Era Vargas e as Leis Trabalhistas <span class="arrow">➜</span></a>
+            <a href="ditadura-militar.html" class="topic-btn btn-repub">Ditadura Civil-Militar e Resistência <span class="arrow">➜</span></a>
+            <a href="redemocratizacao-1988.html" class="topic-btn btn-repub">Redemocratização e Constituição Cidadã (1988) <span class="arrow">➜</span></a>
+        </div>
+
+        <!-- MÓDULO 4: REVOLUÇÕES E TRABALHO -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-revol">⚙️ Revoluções e Trabalho</span></div>
+            <a href="revolucoes-industriais.html" class="topic-btn btn-revol">Revoluções Industriais e o Trabalhador <span class="arrow">➜</span></a>
+            <a href="iluminismo-francesa.html" class="topic-btn btn-revol">Iluminismo e a Revolução Francesa <span class="arrow">➜</span></a>
+        </div>
+
+        <!-- MÓDULO 5: O MUNDO CONTEMPORÂNEO -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-mundo">🌍 O Mundo Contemporâneo</span></div>
+            <a href="imperialismo-primeira-guerra.html" class="topic-btn btn-mundo">Imperialismo e 1ª Guerra Mundial <span class="arrow">➜</span></a>
+            <a href="nazifascismo-segunda-guerra.html" class="topic-btn btn-mundo">Nazifascismo e 2ª Guerra Mundial <span class="arrow">➜</span></a>
+            <a href="guerra-fria.html" class="topic-btn btn-mundo">Guerra Fria e Ditaduras na América Latina <span class="arrow">➜</span></a>
+        </div>
+
+        <!-- MÓDULO 6: HISTÓRIA DO CEARÁ E NORDESTE -->
+        <div class="content-group">
+            <div class="category-header"><span class="badge badge-ceara">🌵 Ceará e Nordeste</span></div>
+            <a href="ciclo-gado-charqueadas.html" class="topic-btn btn-ceara">A Ocupação: Ciclo do Gado e Charqueadas <span class="arrow">➜</span></a>
+            <a href="algodao-secas.html" class="topic-btn btn-ceara">O Algodão, a Seca e a Migração <span class="arrow">➜</span></a>
+            <a href="abolicionismo-cearense.html" class="topic-btn btn-ceara">O Pioneirismo Abolicionista (Dragão do Mar) <span class="arrow">➜</span></a>
+        </div>
+
+        <div id="no-results">
+            <p>😕 Nenhum tópico encontrado com esse nome.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 Promover Educação
+    </footer>
+
+    <script>
+        // Lógica de Pesquisa com normalização de acentos
+        const searchInput = document.getElementById('searchInput');
+        const contentGroups = document.querySelectorAll('.content-group');
+        const noResultsMsg = document.getElementById('no-results');
+
+        searchInput.addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            const termNormalized = term.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let totalVisibleGroups = 0;
+
+            contentGroups.forEach(group => {
+                const links = group.querySelectorAll('.topic-btn');
+                let hasVisibleLink = false;
+
+                links.forEach(link => {
+                    const text = link.textContent.toLowerCase();
+                    const textNormalized = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    
+                    if (textNormalized.includes(termNormalized)) {
+                        link.style.display = 'flex';
+                        hasVisibleLink = true;
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+
+                if (hasVisibleLink) {
+                    group.style.display = 'block';
+                    totalVisibleGroups++;
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+
+            if (totalVisibleGroups === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nazifascismo e 2ª Guerra Mundial - Promover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Poppins:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+:root {
+/* Tema História (Guerra e Crise) - Chumbo e Vermelho Sangue */
+--bg-color: #F1F5F9;
+--text-color: #0F172A;
+--border-color: #0F172A;
+--white: #FFFFFF;
+--theme-light: #E2E8F0;
+--theme-medium: #475569;
+--theme-dark: #1E293B;
+--theme-contrast: #9F1239;
+--theme-accent: #E11D48;
+--theme-text-active: #FFFFFF;
+
+/* NÃO ALTERAR AS CORES ABAIXO */
+--correct-bg: #D1FAE5;
+--correct-border: #059669;
+--wrong-bg: #FFE4E6;
+--wrong-border: #BE123C;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color);
+display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; padding-bottom: 100px;
+background-image: linear-gradient(var(--theme-light) 1px, transparent 1px), linear-gradient(90deg, var(--theme-light) 1px, transparent 1px);
+background-size: 20px 20px;
+}
+
+@keyframes shake {
+0% { transform: translateX(0); }
+25% { transform: translateX(-6px); }
+50% { transform: translateX(6px); }
+75% { transform: translateX(-6px); }
+100% { transform: translateX(0); }
+}
+.shake-effect { animation: shake 0.4s ease-in-out; }
+@keyframes fadeIn { from {opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.pulse-effect { animation: pulse 1s infinite; display: inline-block; }
+@keyframes pulse {
+0% { transform: scale(1); }
+15% { transform: scale(1.15); color: var(--theme-contrast); }
+30% { transform: scale(1); }
+45% { transform: scale(1.15); color: var(--theme-contrast); }
+100% { transform: scale(1); }
+}
+
+.logo-header { width: 100%; max-width: 600px; display: flex; justify-content: center; flex-direction: column; align-items: center; padding: 20px 0 10px 0; }
+.css-logo { font-size: 1.6rem; font-weight: 900; color: var(--white); text-transform: uppercase; letter-spacing: -1px; border: 3px solid var(--border-color); padding: 8px 20px; border-radius: 12px; background: var(--theme-dark); box-shadow: 4px 4px 0px var(--theme-contrast); text-align: center; margin-bottom: 15px; }
+h1 { font-size: 1.8rem; font-weight: 900; color: var(--text-color); text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); text-align: center; }
+.subtitle { font-size: 0.95rem; color: var(--theme-contrast); font-weight: 700; text-align: center; }
+
+.container { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+
+.toggle-container { background-color: var(--white); border: 2px solid var(--border-color); border-radius: 50px; padding: 4px; display: flex; margin-bottom: 10px; box-shadow: 3px 3px 0px var(--border-color); }
+.toggle-btn {flex: 1; border: none; background: none; padding: 12px 0; border-radius: 40px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; color: var(--theme-dark); cursor: pointer; transition: all 0.3s ease; }
+.toggle-btn.active { background-color: var(--theme-dark); color: var(--theme-text-active); box-shadow: 0px 2px 5px rgba(0,0,0,0.2); }
+
+.view-section { display: none; animation: fadeIn 0.4s ease; flex-direction: column; gap: 20px; }
+
+.search-container { position: relative; width: 100%; }
+.search-input { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid var(--border-color); border-radius: 50px; background-color: var(--white); font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text-color); box-shadow: 4px 4px 0px var(--border-color); outline: none; transition: all 0.2s ease; }
+.search-input:focus { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.search-icon {position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; opacity: 0.7; }
+#no-results { text-align: center; color: var(--theme-dark); font-weight: 600; display: none; }
+
+.content-group {display: flex; flex-direction: column; gap: 12px; }
+.section-badge { display: inline-block; padding: 8px 16px; background-color: var(--theme-dark); color: var(--white); font-size: 0.9rem; font-weight: 700; border-radius: 8px; border: 2px solid var(--border-color); box-shadow: 3px 3px 0px rgba(0,0,0,0.2); text-transform: uppercase; align-self: flex-start; margin-bottom: 5px; }
+.theory-box { display: flex; flex-direction: column; padding: 20px; border-radius: 16px; background-color: var(--white); border: 2px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); font-weight: 500; font-size: 0.95rem; line-height: 1.6; position: relative; overflow: hidden; gap: 15px; }
+.theory-box::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background-color: var(--theme-contrast); border-right: 2px solid var(--border-color); }
+.theory-box h3 {font-size: 1.2rem; font-weight: 900; color: var(--theme-dark); margin-bottom: 5px; border-bottom: 2px solid var(--theme-light); padding-bottom: 5px; display: flex; align-items: center; gap: 8px;}
+
+.visual-area { background: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; font-weight: bold; font-size: 1.5rem; color: var(--theme-contrast); text-align: center; }
+.highlight-box { background-color: #F1F5F9; border-left: 4px solid var(--theme-dark); padding: 15px; border-radius: 6px; font-size: 0.9rem; color: #1E293B; }
+.highlight-box.warning { background-color: #FFF1F2; border-left-color: #BE123C; color: #881337; }
+
+.difficulty-badge {display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; border: 2px solid var(--border-color); box-shadow: 2px 2px 0px rgba(0,0,0,1); }
+.dif-facil {background: #D1FAE5; color: #065F46; }
+.dif-medio { background: #FEF08A; color: #713F12; }
+.dif-dificil { background: #FECACA; color: #7F1D1D; }
+
+.question-map { display: flex; gap: 8px; overflow-x: auto; padding: 10px 5px; margin-bottom: 20px; white-space: nowrap; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.question-map::-webkit-scrollbar {display: none; }
+.map-dot { min-width: 35px; height: 35px; border: 2px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: var(--theme-dark); background: white; cursor: pointer; transition: all 0.2s; }
+.map-dot.active { background-color: var(--theme-dark); color: white; box-shadow: 2px 2px 0px var(--theme-contrast); transform: scale(1.1); }
+.map-dot.answered-correct {background-color: var(--correct-bg); border-color: var(--correct-border); color: var(--correct-border); }
+.map-dot.answered-wrong { background-color: var(--wrong-bg); border-color: var(--wrong-border); color: var(--wrong-border); }
+
+.option-btn { display: flex; align-items: center; width: 100%; padding: 16px; background-color: var(--white); border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0px rgba(0,0,0,0.1); font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--text-color); }
+.option-btn:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 5px 5px 0px var(--theme-contrast); border-color: var(--theme-dark); }
+.opt-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border-color); margin-right: 15px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; background: var(--theme-light); color: var(--theme-dark); }
+
+.option-btn.correct {background-color: var(--correct-bg); border-color: var(--correct-border); box-shadow: 2px 2px 0px var(--correct-border); }
+.option-btn.correct .opt-circle {background-color: var(--correct-border); color: white; border-color: var(--correct-border); }
+.option-btn.wrong {background-color: var(--wrong-bg); border-color: var(--wrong-border); opacity: 0.9; box-shadow: none; }
+.option-btn.wrong .opt-circle {background-color: var(--wrong-border); color: white; border-color: var(--wrong-border); }
+.option-btn.disabled {pointer-events: none; opacity: 0.7; }
+
+.feedback-box { display: block; margin-top: 20px; background-color: #FAFAFA; border: 2px dashed var(--theme-dark); border-radius: 12px; padding: 20px; animation: slideUp 0.3s ease-out; }
+.feedback-title { font-weight: 900; text-transform: uppercase; font-size: 0.95rem; margin-bottom: 10px; display:flex; align-items:center; gap:8px; color: var(--theme-dark); }
+.feedback-item { margin-bottom: 8px; font-size: 0.85rem; padding-left: 10px; border-left: 3px solid #CBD5E1; line-height: 1.5; color: #0F172A; }
+.feedback-item.correct-opt {border-left-color: var(--correct-border); font-weight: 700; color: var(--correct-border); background: var(--correct-bg); padding: 10px; border-radius: 0 6px 6px 0; }
+.feedback-item.wrong-opt {border-left-color: var(--wrong-border); color: #7F1D1D; }
+
+.result-card {background: white; border: 3px solid var(--border-color); border-radius: 20px; padding: 30px; box-shadow: 6px 6px 0px var(--border-color); margin-bottom: 30px; text-align: center; }
+.stars-container { font-size: 3.5rem; margin: 10px 0; letter-spacing: 5px; }
+.percentage-big {font-size: 4.5rem; font-weight: 900; color: var(--theme-dark); line-height: 1; margin: 10px 0; text-shadow: 3px 3px 0px var(--theme-contrast); }
+
+.btn-action { width: 100%; padding: 18px; background-color: var(--theme-dark); color: white; border: 3px solid var(--border-color); border-radius: 12px; font-size: 1.1rem; font-weight: 900; cursor: pointer; box-shadow: 4px 4px 0px var(--theme-contrast); transition: all 0.1s; text-transform: uppercase; margin-top: 20px; }
+.btn-action:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--theme-contrast); }
+
+.quiz-footer { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-color); border-top: 3px solid var(--border-color); padding: 15px 20px; display: none; justify-content: space-between; align-items: center; z-index: 100; }
+.nav-btn { padding: 12px 24px; border-radius: 8px; font-weight: 800; border: 2px solid var(--border-color); cursor: pointer; box-shadow: 2px 2px 0px var(--border-color); font-family: 'Poppins', sans-serif; text-transform: uppercase;}
+.btn-next { background-color: var(--theme-dark); color: white; }
+.btn-prev { background-color: white; color: var(--text-color); }
+</style>
+</head>
+<body>
+
+<div class="container">
+<header class="logo-header">
+<div class="css-logo"><span class="pulse-effect">⚔️</span> PROMOVER</div>
+<h1>HISTÓRIA / 9º ANO</h1>
+<p class="subtitle">NAZIFASCISMO E 2ª GUERRA MUNDIAL</p>
+</header>
+
+<div class="toggle-container">
+<button class="toggle-btn active" id="btnExp" onclick="setMode('explanation')">Teoria</button>
+<button class="toggle-btn" id="btnPrac" onclick="setMode('practice')">Prática (30)</button>
+</div>
+
+<div id="viewExplanation" class="view-section" style="display: flex;">
+<div class="search-container">
+<span class="search-icon" aria-hidden="true">🔍</span>
+<input type="text" id="searchInput" class="search-input" aria-label="Pesquisar conteúdo" placeholder="Pesquisar conceito...">
+</div>
+<div id="no-results"><p>Termo não encontrado.</p></div>
+
+<div class="content-group">
+    <span class="section-badge">O Caldo de Cultura</span>
+    <div class="theory-box">
+        <h3>Como o caos virou ditadura</h3>
+        <p>Regimes totalitários não caem do céu. Eles nascem do desespero. Na década de 1920 e 30, a Europa estava destroçada. A Itália (frustrada com o fim da 1ª Guerra) e a Alemanha (humilhada pelo <strong>Tratado de Versalhes</strong>) sofreram um golpe fatal com a <strong>Crise de 1929</strong>.</p>
+        <div class="highlight-box">
+            Com desemprego em massa e hiperinflação, o discurso democrático perdeu força. A população, desesperada, abraçou líderes messiânicos (Hitler e Mussolini) que prometiam "ordem", militarismo e apontavam culpados fáceis para problemas complexos.
+        </div>
+    </div>
+</div>
+
+<div class="content-group">
+    <span class="section-badge">Anatomia do Totalitarismo</span>
+    <div class="theory-box">
+        <h3>O que é o Nazifascismo?</h3>
+        <p>Ambos (Fascismo italiano e Nazismo alemão) compartilhavam: Nacionalismo extremado, militarismo, culto ao líder (Führer / Duce), fim das liberdades individuais e ódio mortal ao comunismo.</p>
+        <div class="visual-area" style="font-size: 1rem;">
+            O diferencial do Nazismo foi o <strong>Antissemitismo</strong> (ódio aos judeus) e a busca pelo <strong>Espaço Vital (Lebensraum)</strong>.
+        </div>
+        <div class="highlight-box warning">
+            <strong>ALERTA DE FAKE NEWS HISTÓRICA:</strong><br>
+            Achar que o Nazismo era de esquerda porque o partido se chamava "Nacional-Socialista". Isso é um erro grosseiro. O termo foi usado para atrair operários. Na prática, Hitler destruiu sindicatos, perseguiu comunistas (seus maiores inimigos políticos) e aliou-se à grande burguesia industrial alemã. Nazismo é extrema-direita.
+        </div>
+    </div>
+</div>
+
+<div class="content-group">
+    <span class="section-badge">A Guerra em Três Atos</span>
+    <div class="theory-box">
+        <h3>O Conflito mais Letal da História</h3>
+        <p><strong>1. O Estopim (1939):</strong> Após anos da covarde "Política de Apaziguamento" da Inglaterra e França (que deixavam Hitler invadir países para evitar a guerra), a invasão da Polônia cruzou a linha vermelha.</p>
+        <div class="highlight-box">
+            <strong>2. Os Lados:</strong><br>
+            ⚔️ <strong>Eixo:</strong> Alemanha, Itália e Japão. (Agressores iniciais)<br>
+            🛡️ <strong>Aliados:</strong> Inglaterra, URSS (após 1941), EUA (após Pearl Harbor, 1941) e França.
+        </div>
+        <div class="highlight-box">
+            <strong>3. O Fim:</strong> A derrota em <strong>Stalingrado</strong> (pela URSS) quebrou o exército alemão no leste, e o <strong>Dia D</strong> esmagou Hitler no oeste. O Japão só se rendeu após o ataque nuclear (Hiroshima e Nagasaki), que serviu também como um aviso americano aos soviéticos: o início da Guerra Fria.
+        </div>
+    </div>
+</div>
+
+<button class="btn-action" onclick="setMode('practice')">
+Iniciar Diagnóstico (30 Q) →
+</button>
+</div>
+
+<div id="viewPractice" class="view-section">
+<div style="margin-bottom: 20px; background-color: var(--white); padding: 15px; border-radius: 12px; border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color);">
+<h2 style="color:var(--theme-dark); font-weight:900; margin-bottom: 5px;">A Prova de Fogo</h2>
+<p style="color: #0F172A; font-size: 0.95rem; font-weight:600;">
+30 questões rigorosas. Acerte <strong>80% (24/30)</strong> para provar seu domínio. Leia a correção de cada erro!
+</p>
+</div>
+<div class="question-map" id="qMap"></div>
+<div id="quizContainer" style="margin-bottom: 100px;"></div>
+</div>
+
+<div id="viewResult" class="view-section">
+<div class="result-card">
+<h2 style="font-weight:900; text-transform:uppercase;">Relatório Final</h2>
+<div class="stars-container" id="finalStars">★</div>
+<div class="percentage-big" id="finalPercent">0%</div>
+<p style="font-size:1.2rem; font-weight:700; color:#555;" id="finalScoreText">Você acertou 0 de 30</p>
+<div id="review-container"></div>
+</div>
+<div id="action-buttons"></div>
+</div>
+</div>
+
+<footer class="quiz-footer" id="quizFooter">
+<button class="nav-btn btn-prev" id="btnPrev" onclick="changeQuestion(-1)">Anterior</button>
+<button class="nav-btn btn-next" id="btnNext" onclick="changeQuestion(1)">Próxima</button>
+</footer>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const contentGroups = document.querySelectorAll('.content-group');
+const noResultsMsg = document.getElementById('no-results');
+
+searchInput.addEventListener('input', function(e) {
+const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+let totalVisible = 0;
+
+contentGroups.forEach(group => {
+const textContent = group.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+if (textContent.includes(term)) {
+group.style.display = 'flex';
+totalVisible++;
+} else {
+group.style.display = 'none';
+}
+});
+noResultsMsg.style.display = totalVisible === 0 ? 'block' : 'none';
+});
+
+// MOTOR DE QUESTÕES RIGOROSAS
+const questions = [
+// ----- FÁCEIS (10) -----
+{
+id: 1, level: "Fácil",
+text: "Qual evento é considerado, pelos historiadores, como o estopim militar que deu início à Segunda Guerra Mundial na Europa em 1939?",
+options: ["O ataque japonês à base naval de Pearl Harbor.", "A invasão da Polônia pelas tropas da Alemanha nazista.", "O assassinato do arquiduque Francisco Ferdinando.", "O bombardeio nuclear sobre as cidades de Hiroshima e Nagasaki."],
+correct: 1,
+explanation: {
+correct: "Em 1º de setembro de 1939, a Alemanha invadiu a Polônia, o que obrigou Inglaterra e França a declararem guerra, iniciando o conflito.",
+options: ["Este evento ocorreu dois anos depois (1941) e marcou a entrada dos EUA na guerra.", "Certa", "Este foi o estopim da PRIMEIRA Guerra Mundial (1914). Erro crasso de cronologia.", "As bombas atômicas foram o evento que finalizou a guerra em 1945, não o que a começou."]
+}
+},
+{
+id: 2, level: "Fácil",
+text: "A aliança militar conhecida como 'Eixo' durante a Segunda Guerra Mundial era liderada originalmente por quais países?",
+options: ["Alemanha, Itália e Japão.", "Estados Unidos, Inglaterra e França.", "Alemanha, União Soviética e Inglaterra.", "Itália, Espanha e Áustria."],
+correct: 0,
+explanation: {
+correct: "O Eixo (Roma-Berlim-Tóquio) foi a coalizão dos países agressores de viés autoritário/expansionista.",
+options: ["Certa", "Esses três países formavam a espinha dorsal militar das forças Aliadas (opostas ao Eixo).", "A União Soviética lutou CONTRA a Alemanha após ser invadida em 1941, e a Inglaterra sempre foi Aliada.", "A Espanha de Franco, apesar de fascista, manteve-se oficialmente neutra na guerra global."]
+}
+},
+{
+id: 3, level: "Fácil",
+text: "Qual tratado de paz, assinado após a 1ª Guerra Mundial, impôs multas severas e perdas territoriais à Alemanha, gerando o revanchismo que alimentou o Nazismo?",
+options: ["Tratado de Tordesilhas.", "Conferência de Yalta.", "Tratado de Versalhes.", "Pacto de Varsóvia."],
+correct: 2,
+explanation: {
+correct: "O Tratado de Versalhes (1919) humilhou a Alemanha economicamente e militarmente, sendo o principal combustível do discurso de Hitler.",
+options: ["Isso dividiu as Américas entre Portugal e Espanha no século XV. Anacronismo gigante.", "Yalta foi a conferência no final da 2ª Guerra para dividir a Europa, não após a 1ª.", "Certa", "Tratado militar da URSS durante a Guerra Fria, bem depois do contexto nazista."]
+}
+},
+{
+id: 4, level: "Fácil",
+text: "Na Itália, o movimento fascista chegou ao poder na década de 1920. Quem foi o principal líder e fundador deste regime totalitário?",
+options: ["Benito Mussolini.", "Adolf Hitler.", "Winston Churchill.", "Josef Stalin."],
+correct: 0,
+explanation: {
+correct: "Mussolini, conhecido como 'Il Duce', fundou o fascismo italiano e foi a grande inspiração inicial para o nazismo alemão.",
+options: ["Certa", "Hitler foi o líder do Nazismo na Alemanha, e não do fascismo na Itália.", "Churchill foi o Primeiro-Ministro britânico que lutou ferozmente CONTRA o fascismo.", "Stalin foi o líder da União Soviética (comunista), o arqui-inimigo ideológico do fascismo."]
+}
+},
+{
+id: 5, level: "Fácil",
+text: "O genocídio sistemático de milhões de judeus, ciganos, homossexuais e opositores políticos pelo Estado nazista ficou conhecido historicamente como:",
+options: ["Apartheid.", "Holocausto (ou Shoah).", "Pogrom.", "Fascismo estrutural."],
+correct: 1,
+explanation: {
+correct: "O Holocausto foi a máquina de extermínio industrial criada por Hitler que assassinou 6 milhões de judeus.",
+options: ["Apartheid foi o regime de segregação racial oficial na África do Sul, não o extermínio na Europa.", "Certa", "Pogroms são ataques violentos de multidões contra judeus (ocorriam na Rússia czarista), mas não define a escala industrial do projeto nazista.", "Fascismo é o nome da ideologia política em si, não do evento de extermínio."]
+}
+},
+{
+id: 6, level: "Fácil",
+text: "O que provocou a entrada direta dos Estados Unidos na Segunda Guerra Mundial em dezembro de 1941?",
+options: ["O ataque japonês surpresa à base de Pearl Harbor.", "A invasão de Paris pelas tropas alemãs.", "O afundamento de navios americanos por submarinos soviéticos.", "O descumprimento do Tratado de Versalhes por Hitler."],
+correct: 0,
+explanation: {
+correct: "O Japão atacou a frota americana no Havaí, o que forçou a opinião pública dos EUA, antes isolacionista, a exigir guerra.",
+options: ["Certa", "A queda da França assustou o mundo em 1940, mas os EUA continuaram oficialmente neutros na época.", "A URSS e os EUA lutaram do MESMO LADO na Segunda Guerra Mundial.", "Isso ocorreu anos antes. Os EUA não entraram na guerra por causa das quebras iniciais do tratado."]
+}
+},
+{
+id: 7, level: "Fácil",
+text: "Durante a Segunda Guerra Mundial, o Brasil participou militarmente enviando a FEB (Força Expedicionária Brasileira). Qual era o principal lema, em tom de ironia, da FEB?",
+options: ["'O Brasil acima de tudo.'", "'A cobra vai fumar.'", "'Independência ou morte.'", "'Ordem e Progresso na Europa.'"],
+correct: 1,
+explanation: {
+correct: "Como se dizia que 'era mais fácil uma cobra fumar do que o Brasil entrar na guerra', os pracinhas adotaram a cobra fumando como símbolo.",
+options: ["Este é um bordão militar e político moderno, não o símbolo histórico da FEB.", "Certa", "Grito de Dom Pedro I na independência do Brasil em 1822. Séculos de diferença.", "Frase da bandeira nacional com viés positivista, não o lema das tropas em combate."]
+}
+},
+{
+id: 8, level: "Fácil",
+text: "Qual ditador foi o responsável máximo pela política de expansão militar da Alemanha sob o símbolo da Suástica?",
+options: ["Benito Mussolini.", "Adolf Hitler.", "Heinrich Himmler.", "Joseph Goebbels."],
+correct: 1,
+explanation: {
+correct: "Adolf Hitler, o 'Führer', foi o chefe absoluto do Estado nazista e comandante-em-chefe das agressões alemãs.",
+options: ["Ditador da Itália fascista, não da Alemanha.", "Certa", "Líder da SS e arquiteto do Holocausto, mas um subordinado de Hitler.", "Ministro da Propaganda, nunca comandou o Estado."]
+}
+},
+{
+id: 9, level: "Fácil",
+text: "A Segunda Guerra encerrou-se no front do Pacífico em 1945 com um evento devastador e inédito na história militar. Que evento foi esse?",
+options: ["A invasão anfíbia da ilha de Tóquio.", "O lançamento de duas bombas atômicas pelos EUA.", "A revolta do exército chinês.", "O suicídio coletivo do alto comando japonês."],
+correct: 1,
+explanation: {
+correct: "As bombas lançadas sobre Hiroshima e Nagasaki forçaram o Japão à rendição incondicional.",
+options: ["Os Aliados planejavam invadir o Japão, mas as bombas atômicas tornaram a invasão (que seria brutal) desnecessária.", "Certa", "A China lutou muito, mas não foi ela quem forçou o fim da guerra no Pacífico.", "Muitos cometeram suicídio, mas foi a destruição nuclear que politicamente encerrou a guerra."]
+}
+},
+{
+id: 10, level: "Fácil",
+text: "Qual das potências abaixo NÃO fazia parte do grupo dos Aliados no fim da Segunda Guerra Mundial?",
+options: ["Estados Unidos.", "Inglaterra (Reino Unido).", "Japão.", "União Soviética."],
+correct: 2,
+explanation: {
+correct: "O Japão era uma potência agressora e expansionista, formando o Eixo junto com Alemanha e Itália.",
+options: ["Foram a maior potência industrial e militar dos Aliados.", "Resistiu sozinha ao Nazismo no Ocidente em 1940 antes da entrada de EUA e URSS.", "Certa", "Absorveu o maior impacto terrestre da guerra e marchou até Berlim pelos Aliados."]
+}
+},
+
+// ----- MÉDIAS (10) -----
+{
+id: 11, level: "Médio",
+text: "Uma das características centrais da ideologia nazista era a busca pelo 'Lebensraum'. O que esse conceito significava na prática?",
+options: ["A criação de campos de concentração para trabalho forçado.", "A conquista de 'Espaço Vital' (territórios) no Leste para a raça ariana.", "A purificação cultural pela queima de livros considerados subversivos.", "O pacto de não agressão assinado temporariamente com os comunistas."],
+correct: 1,
+explanation: {
+correct: "Hitler acreditava que os alemães (raça superior em sua mente) precisavam de terras e recursos no Leste Europeu (Rússia/Polônia) para prosperar.",
+options: ["Isso era a ferramenta do Holocausto, não o conceito geopolítico de Lebensraum.", "Certa", "A queima de livros existiu, mas Lebensraum se refere puramente à expansão territorial e conquista de solo.", "Isso foi o Pacto Ribbentrop-Molotov, que era apenas um truque militar temporário, oposto ao Lebensraum de longo prazo."]
+}
+},
+{
+id: 12, level: "Médio",
+text: "Qual foi o impacto direto da Crise de 1929 (Grande Depressão) no cenário político da Alemanha?",
+options: ["Fortaleceu a República de Weimar e consolidou a democracia.", "Criou desemprego em massa, facilitando o discurso salvacionista de Hitler.", "Provocou uma revolução comunista imediata financiada por Stalin.", "Uniu França e Alemanha em um bloco econômico protetor."],
+correct: 1,
+explanation: {
+correct: "Com o colapso econômico e o desespero do povo, o discurso radical e de promessas mágicas do Partido Nazista encontrou terreno fértil.",
+options: ["Pelo contrário, destruiu a credibilidade da República de Weimar.", "Certa", "Os comunistas cresceram, mas quem tomou o poder usando o medo dessa revolução foi Hitler.", "Absurdo. A crise aumentou o isolacionismo e a tensão entre as nações, não a união."]
+}
+},
+{
+id: 13, level: "Médio",
+text: "Antes de 1939, Inglaterra e França adotaram a 'Política de Apaziguamento'. Qual era o objetivo desastroso dessa política?",
+options: ["Fazer concessões territoriais a Hitler na esperança de que ele se satisfizesse e evitasse uma guerra.", "Armar secretamente a Polônia para destruir a Alemanha em um ataque surpresa.", "Proibir a Alemanha de reconstruir seu exército, ameaçando com invasão imediata.", "Aliar-se à União Soviética para cercar a Alemanha nazista."],
+correct: 0,
+explanation: {
+correct: "Os líderes ocidentais (como Chamberlain) tinham tanto medo de outra guerra que cederam a Áustria e os Sudetos a Hitler achando que ele pararia. Foi um erro fatal.",
+options: ["Certa", "Inglaterra e França não queriam guerra de jeito nenhum, eles recuaram, não atacaram.", "Isso era o que eles DEVIAM ter feito em 1936, mas fecharam os olhos para o rearmamento alemão.", "Pelo contrário, eles desprezavam a URSS, o que empurrou Stalin a fazer um acordo temporário com Hitler."]
+}
+},
+{
+id: 14, level: "Médio",
+text: "Em 1939, o mundo ficou chocado quando Hitler e Stalin, inimigos ideológicos mortais, assinaram o Pacto Ribbentrop-Molotov. O que esse pacto estabelecia secretamente?",
+options: ["A rendição incondicional do exército soviético.", "A divisão do território polonês entre a Alemanha e a União Soviética.", "A aliança oficial para invadir os Estados Unidos.", "A libertação dos judeus em troca de petróleo russo."],
+correct: 1,
+explanation: {
+correct: "Era um pacto de não agressão que continha uma cláusula secreta: invadir e dividir a Polônia no meio, garantindo a Hitler tranquilidade inicial.",
+options: ["A URSS não se rendeu. Anos depois (1941) seria invadida, mas lutaria de volta e venceria no Leste.", "Certa", "A URSS não tinha qualquer intenção de atacar os EUA; eles queriam apenas tempo para se armar.", "Ideia fantasiosa e sem nenhum embasamento histórico."]
+}
+},
+{
+id: 15, level: "Médio",
+text: "Qual batalha, lutada em cenário de frio extremo e combates rua a rua, é considerada a maior virada (ponto de inflexão) da Segunda Guerra, onde o exército nazista foi massacrado?",
+options: ["Batalha de Midway.", "Dia D (Desembarque na Normandia).", "Batalha da Inglaterra.", "Batalha de Stalingrado."],
+correct: 3,
+explanation: {
+correct: "Em Stalingrado (1942-1943), o invencível 6º Exército alemão foi cercado e destruído pelos soviéticos, mudando o rumo da guerra.",
+options: ["Midway foi a virada naval americana contra o Japão no Pacífico.", "O Dia D foi vital, mas ocorreu em 1944, quando a Alemanha já estava perdendo a guerra no front oriental (soviético).", "Foi uma guerra aérea defensiva britânica, crucial, mas não esmagou o exército terrestre alemão.", "Certa"]
+}
+},
+{
+id: 16, level: "Médio",
+text: "O que marcou a chamada 'Marcha sobre Roma' em 1922?",
+options: ["O ataque militar inglês para derrubar o ditador Mussolini.", "A demonstração de força dos Camisas Negras que forçou o rei a entregar o poder a Mussolini.", "A revolta dos comunistas italianos que instaurou a primeira república soviética na Europa Ocidental.", "O desfile das tropas americanas após a libertação da Itália no fim da guerra."],
+correct: 1,
+explanation: {
+correct: "Os fascistas marcharam armados, e a covardia da monarquia italiana cedeu à pressão, nomeando Mussolini Primeiro-Ministro sem que houvesse eleição democrática.",
+options: ["Anacronismo total. O ataque aliado na Itália só ocorreria na Segunda Guerra, décadas depois.", "Certa", "Foram os fascistas (extrema-direita anticomunista) que marcharam, e não os comunistas.", "A libertação ocorreu em 1944-1945, não em 1922."]
+}
+},
+{
+id: 17, level: "Médio",
+text: "Em qual cenário a Força Expedicionária Brasileira (FEB) combateu heroicamente ao lado das tropas aliadas?",
+options: ["Nas selvas do Pacífico contra o Japão.", "Nas praias da Normandia (França) durante o Dia D.", "Nas montanhas da Itália (ex: Monte Castelo) contra tropas alemãs e italianas.", "No cerco de Berlim ajudando o Exército Vermelho soviético."],
+correct: 2,
+explanation: {
+correct: "Os pracinhas brasileiros foram enviados ao duro front italiano, onde combateram no terreno montanhoso e congelado de Monte Castelo e Montese.",
+options: ["O Brasil não mandou tropas terrestres para a Guerra do Pacífico.", "Mito comum em filmes. O Brasil não participou do desembarque na França.", "Certa", "O cerco de Berlim foi feito exclusivamente pelas tropas soviéticas no Leste."]
+}
+},
+{
+id: 18, level: "Médio",
+text: "O que foram as 'Leis de Nuremberg' (1935) impostas pela Alemanha nazista?",
+options: ["Leis que legalizaram o tribunal que julgou os nazistas após a guerra.", "Um conjunto de leis raciais que retirou a cidadania dos judeus e proibiu o casamento com 'arianos'.", "Leis de proteção ao trabalhador alemão que copiaram o modelo socialista soviético.", "As regras de engajamento militar do exército alemão durante invasões."],
+correct: 1,
+explanation: {
+correct: "Foi a base 'legal' do racismo de Estado. Os judeus perderam todos os direitos civis na Alemanha muito antes do extermínio em si começar.",
+options: ["Você confundiu com os TRIBUNAIS de Nuremberg, que aconteceram em 1945/46 para prender nazistas.", "Certa", "O Nazismo perseguiu sindicatos e nunca copiou leis trabalhistas soviéticas; isso é falso.", "Leis de Nuremberg eram sobre 'pureza de sangue' civil, não regras militares de combate."]
+}
+},
+{
+id: 19, level: "Médio",
+text: "Como Adolf Hitler assumiu o cargo máximo de poder (Chanceler) na Alemanha em 1933?",
+options: ["Por meio de um violento golpe de Estado militar com apoio do exército francês.", "Liderando uma revolução armada da classe operária comunista nas ruas de Berlim.", "Ele foi nomeado legitimamente pelo Presidente Hindenburg após seu partido obter força parlamentar.", "Após vencer a Primeira Guerra Mundial, como recompensa do povo alemão."],
+correct: 2,
+explanation: {
+correct: "O maior perigo do fascismo: Hitler não deu um golpe para entrar. Ele usou o sistema democrático. O Partido Nazista foi o mais votado, e a elite conservadora lhe entregou o cargo.",
+options: ["Ele tentou um golpe em 1923 (Putsch de Munique) e falhou. E os franceses eram inimigos.", "Hitler odiava e exterminou os comunistas. Ele não era líder operário marxista.", "Certa", "A Alemanha PERDEU a Primeira Guerra Mundial, e Hitler era apenas um soldado ferido na época."]
+}
+},
+{
+id: 20, level: "Médio",
+text: "Qual das opções abaixo apresenta uma diferença fundamental entre Fascismo e Comunismo?",
+options: ["Fascismo é totalitário, enquanto o comunismo de Stalin permitia oposição democrática.", "O Fascismo defende a nação, o militarismo e a propriedade privada (para a elite do Estado); o comunismo defende o fim da propriedade privada e a luta de classes.", "O Comunismo é de extrema-direita, focado no nacionalismo, e o Fascismo é de extrema-esquerda.", "Ambos acreditavam que o mercado internacional livre e desregulado era a solução econômica perfeita."],
+correct: 1,
+explanation: {
+correct: "Enquanto o comunismo soviético planificou e estatizou a economia (fim do capitalismo), a Alemanha Nazista manteve empresas privadas ricas e protegidas, desde que fossem leais ao Führer.",
+options: ["A URSS de Stalin era uma ditadura brutal; não permitia nenhuma oposição democrática.", "Certa", "Você inverteu completamente os polos ideológicos dos conceitos.", "Ambos eram regimes de controle estatal fortíssimo da economia, odiavam o liberalismo clássico solto."]
+}
+},
+
+// ----- DIFÍCEIS (10) -----
+{
+id: 21, level: "Difícil",
+text: "Nas redes sociais, frequentemente surge o argumento falacioso de que 'O Nazismo era de esquerda porque o partido se chamava Nacional-Socialista'. Qual fato histórico destrói completamente essa mentira?",
+options: ["Hitler estatizou todas as fábricas alemãs e entregou o controle total aos sindicatos operários.", "O nazismo defendeu o fim da propriedade privada e a união internacional de todos os trabalhadores do mundo.", "Os primeiros campos de concentração criados por Hitler (ex: Dachau) foram projetados para aprisionar e matar líderes sindicais, marxistas e comunistas alemães.", "O exército de Hitler lutou a guerra inteira ao lado do Exército Vermelho da União Soviética."],
+correct: 2,
+explanation: {
+correct: "O termo 'socialista' foi usado no início apenas para roubar eleitores da esquerda. Na prática, o Nazismo aliou-se aos grandes industriais (capitalistas) e exterminou a esquerda marxista.",
+options: ["Isso é o que Stalin fez na URSS, não o que Hitler fez na Alemanha. A Alemanha manteve megaempresas (Krupp, IG Farben).", "Isso é a base do Marxismo, e Hitler acreditava que isso era uma 'doença judaica' a ser destruída.", "Certa", "A guerra mais sangrenta da história (Front Oriental) foi exatamente a invasão da URSS pela Alemanha nazista."]
+}
+},
+{
+id: 22, level: "Difícil",
+text: "O que foi a Conferência de Munique (1938) e o que ela simbolizou na diplomacia pré-guerra?",
+options: ["Foi o acordo onde França e Inglaterra cederam os Sudetos da Tchecoslováquia a Hitler, marcando o ápice humilhante da 'Política de Apaziguamento'.", "Foi a declaração de guerra imediata da Inglaterra após a quebra do Tratado de Versalhes.", "A divisão do território polonês entre os nazistas e os fascistas italianos.", "A reunião que definiu a exclusão e perseguição legal dos judeus em toda a Europa Ocidental."],
+correct: 0,
+explanation: {
+correct: "Em Munique, as democracias entregaram a Tchecoslováquia (que nem foi convidada para a reunião) de bandeja para Hitler, provando a ele que os Aliados eram covardes politicamente.",
+options: ["Certa", "Não houve declaração de guerra. Houve capitulação política (Eles recuaram).", "A Polônia foi dividida um ano depois entre Alemanha e URSS (Ribbentrop-Molotov).", "Você confundiu com a Conferência de Wannsee (1942), que planejou a 'Solução Final' (Holocausto)."]
+}
+},
+{
+id: 23, level: "Difícil",
+text: "A tática militar nazista de avançar furiosamente e sem aviso, usando bombardeios aéreos massivos seguidos por divisões de tanques (Panzers) rápidos para romper linhas inimigas, ficou conhecida como:",
+options: ["Guerra de Trincheiras.", "Kamikaze.", "Guerra Fria.", "Blitzkrieg (Guerra Relâmpago)."],
+correct: 3,
+explanation: {
+correct: "A Blitzkrieg inovou na guerra ao focar em velocidade, rádio-comunicação e choque conjunto de aviões e tanques, evitando ficar preso no campo de batalha.",
+options: ["Essa foi a principal característica da Primeira Guerra Mundial (lenta e estagnada). O Nazismo aprendeu a evitar isso.", "Tática suicida japonesa no front do Pacífico, não tática tática de invasão alemã.", "Guerra política entre EUA e URSS que aconteceu APÓS o fim do Nazismo.", "Certa"]
+}
+},
+{
+id: 24, level: "Difícil",
+text: "Para além do objetivo de derrotar o Japão, a decisão geopolítica dos EUA de jogar bombas atômicas em 1945 carregava uma mensagem política clara. Qual?",
+options: ["Punir a Alemanha nazista que ainda resistia no front asiático.", "Demonstrar o monopólio e o poder de destruição absoluto americano para intimidar a União Soviética, inaugurando as tensões da Guerra Fria.", "Testar novas tecnologias apenas para forçar o Japão a pagar indenizações financeiras de guerra.", "Garantir a sobrevivência da Liga das Nações que estava prestes a colapsar."],
+correct: 1,
+explanation: {
+correct: "Muitos historiadores concordam que a bomba foi o último ato da Segunda Guerra, mas também o primeiro aviso letal do início da Guerra Fria contra o avanço soviético.",
+options: ["A Alemanha já havia se rendido meses antes (maio de 1945). O eixo na Europa já estava morto.", "Certa", "O objetivo não era financeiro; era acabar a guerra sem uma invasão terrestre sangrenta e limitar o avanço geopolítico russo na Ásia.", "A Liga das Nações já estava morta e desmoralizada desde a década de 30."]
+}
+},
+{
+id: 25, level: "Difícil",
+text: "O que ocorreu na Guerra Civil Espanhola (1936-1939) que a torna intrinsecamente ligada à 2ª Guerra Mundial?",
+options: ["Foi lá que os Estados Unidos e a URSS testaram a primeira bomba atômica da história contra os fascistas.", "Hitler e Mussolini enviaram tropas e aviões (como no bombardeio de Guernica) para apoiar o fascista Franco, usando a Espanha como laboratório de teste militar.", "A Espanha liderou a aliança Aliada que derrotaria Hitler anos depois na Normandia.", "Os judeus criaram um exército próprio na Espanha que foi derrotado antes de cruzar os Pireneus."],
+correct: 1,
+explanation: {
+correct: "A Alemanha enviou a famosa Legião Condor, testando suas táticas de bombardeio terrorista (Blitzkrieg) que seriam usadas meses depois contra o resto da Europa.",
+options: ["A bomba atômica só seria testada em 1945 no deserto americano do Novo México.", "Certa", "A Espanha fascista de Franco manteve-se simpática a Hitler, mas oficialmente neutra durante a guerra global.", "Essa formação militar em massa nunca ocorreu na Espanha."]
+}
+},
+{
+id: 26, level: "Difícil",
+text: "Havia uma enorme contradição política na Era Vargas em relação à participação do Brasil na Segunda Guerra. Que contradição era essa?",
+options: ["O Brasil, que vivia a ditadura autoritária do Estado Novo, mandou tropas para a Europa para lutar a favor de regimes democráticos e contra ditaduras.", "O Brasil era o país mais democrático e livre da América Latina, mas lutou ao lado da Alemanha nazista na guerra.", "Getúlio Vargas odiava os Estados Unidos e apenas aceitou lutar porque Hitler bombardeou o Rio de Janeiro.", "A FEB era composta apenas por simpatizantes comunistas, enquanto o governo de Vargas era fascista."],
+correct: 0,
+explanation: {
+correct: "Vargas flertou com o fascismo nos anos 30. O Brasil era uma ditadura férrea (Estado Novo) em casa, mas seus pracinhas morreram libertando a Itália da tirania fascista. Essa hipocrisia derrubou Vargas após a guerra.",
+options: ["Certa", "O Brasil vivia uma ditadura pesada desde 1937, e lutou CONTRA o Eixo, e não a favor.", "O Eixo (submarinos alemães) afundou navios brasileiros, forçando Vargas (que queria negociar com os dois lados) a se aliar aos EUA.", "Falso. O Exército Brasileiro sob Vargas perseguia duramente os comunistas no Brasil (Intentona Comunista de 1935)."]
+}
+},
+{
+id: 27, level: "Difícil",
+text: "Qual o principal resultado das Conferências de Yalta e Potsdam, ocorridas em 1945, entre os líderes vencedores (EUA, URSS e Inglaterra)?",
+options: ["A decisão de rearmar a Alemanha imediatamente para conter a invasão japonesa na Ásia.", "O acordo que definiu a divisão da Alemanha em zonas de influência e as fronteiras geopolíticas do mundo pós-guerra.", "A assinatura oficial da Declaração Universal dos Direitos Humanos que impediu a Guerra Fria.", "A devolução incondicional de todos os territórios invadidos pela URSS para suas nações originais."],
+correct: 1,
+explanation: {
+correct: "Nestas reuniões, Roosevelt (depois Truman), Churchill e Stalin literalmente fatiaram a Europa e a Alemanha em duas metades: uma capitalista e uma socialista.",
+options: ["A Alemanha foi desmilitarizada e dividida; seria loucura rearmá-la no dia seguinte à sua queda.", "Certa", "A Declaração é da ONU (1948). Yalta e Potsdam escancararam que EUA e URSS logo seriam inimigos irreconciliáveis.", "A URSS usou essas conferências exatamente para manter seu domínio 'protetor' sobre o Leste Europeu (Cortina de Ferro)."]
+}
+},
+{
+id: 28, level: "Difícil",
+text: "Por que a criação da ONU (Organização das Nações Unidas) em 1945 foi vista como imperativa pelas potências vencedoras?",
+options: ["Para formar um exército global que obrigasse os países a adotarem o capitalismo e acabar com a União Soviética.", "Porque a instituição anterior, a Liga das Nações, falhou miseravelmente em conter o fascismo e não conseguiu impedir a Segunda Guerra.", "Para estabelecer um banco central mundial que unificaria a moeda de todos os países derrotados e vencedores.", "Para legalizar a censura imposta pelos regimes fascistas que sobreviveram na América do Sul."],
+correct: 1,
+explanation: {
+correct: "A Liga das Nações (criada após a Primeira Guerra) era fraca e não tinha poder de sanção militar. A ONU foi criada com o Conselho de Segurança para evitar uma Terceira Guerra Mundial nuclear.",
+options: ["A URSS (que não era capitalista) foi uma das fundadoras da ONU e possui poder de Veto permanente no Conselho de Segurança.", "Certa", "Banco Mundial e FMI (Bretton Woods) cuidam das finanças. A função primordial da ONU é diplomática e de manutenção da paz.", "A ONU nasceu fundamentada na busca (ainda que imperfeita) pela expansão dos Direitos Humanos, e não da censura fascista."]
+}
+},
+{
+id: 29, level: "Difícil",
+text: "O que representaram os Tribunais de Nuremberg, realizados após a rendição alemã?",
+options: ["A vingança soviética isolada que fuzilou milhões de civis alemães sem nenhuma evidência judicial.", "O primeiro julgamento militar internacional onde líderes do Estado foram processados e condenados legalmente por 'crimes contra a humanidade'.", "O acordo de paz financeiro onde os cientistas alemães compraram a liberdade com a entrega de ouro roubado.", "A absolvição geral dos generais nazistas sob a justificativa jurídica de que 'estavam apenas cumprindo ordens'."],
+correct: 1,
+explanation: {
+correct: "Nuremberg instituiu um marco no Direito Internacional: chefes de Estado e militares não poderiam mais usar a desculpa de 'cumpri ordens' para justificar o genocídio sistemático.",
+options: ["Embora houvesse abusos, o Tribunal foi um julgamento legal televisionado e documentado organizado por todas as potências Aliadas, com direito de defesa.", "Certa", "Houve cientistas recrutados secretamente (Operação Paperclip), mas o Tribunal processou a cúpula política e militar, e muitos foram enforcados.", "A defesa 'eu só cumpri ordens' foi rejeitada pelos juízes de forma histórica."]
+}
+},
+{
+id: 30, level: "Difícil",
+text: "A respeito do avanço final dos Aliados que esmagou a Alemanha em 1945, é correto afirmar geopoliticamente que:",
+options: ["Os americanos chegaram a Berlim meses antes dos soviéticos, tomando a capital sozinhos e entregando o bunker de Hitler para a ONU.", "A capital Berlim foi cercada, brutalmente bombardeada e tomada exclusivamente pelo Exército Vermelho soviético, que cravou sua bandeira no Reichstag.", "Inglaterra e França não participaram das batalhas finais pois assinaram um armistício separado com a Alemanha em 1944.", "Os Aliados perdoaram Adolf Hitler após ele assinar a rendição incondicional na França."],
+correct: 1,
+explanation: {
+correct: "Stalin fez questão de que o Exército Vermelho tomasse Berlim como prêmio de sangue (eles sofreram as piores perdas da guerra). Os americanos pararam no rio Elba por acordo diplomático prévio.",
+options: ["Falso. As tropas americanas frearam seu avanço ocidental para permitir que os soviéticos invadissem Berlim pelo leste.", "Certa", "França Livre e Inglaterra lutaram intensamente na travessia do Rio Reno até a rendição alemã.", "Hitler cometeu suicídio no bunker em Berlim em 30 de abril de 1945. Ele jamais se rendeu."]
+}
+}
+];
+
+// --- SISTEMA DE SALVAMENTO (LOCALSTORAGE) E LÓGICA ---
+const storageKey = 'promover_quiz_' + document.title.replace(/\s+/g, '_');
+let currentQuestion = 0;
+
+let savedAnswers = localStorage.getItem(storageKey);
+let userAnswers = savedAnswers ? JSON.parse(savedAnswers) : new Array(questions.length).fill(null);
+
+function setMode(mode) {
+const views = ['viewExplanation', 'viewPractice', 'viewResult'];
+views.forEach(v => document.getElementById(v).style.display = 'none');
+document.getElementById('quizFooter').style.display = 'none';
+
+if(mode === 'explanation') {
+document.getElementById('viewExplanation').style.display = 'flex';
+document.getElementById('btnExp').classList.add('active');
+document.getElementById('btnPrac').classList.remove('active');
+} else if (mode === 'practice') {
+document.getElementById('viewPractice').style.display = 'block';
+document.getElementById('quizFooter').style.display = 'flex';
+document.getElementById('btnExp').classList.remove('active');
+document.getElementById('btnPrac').classList.add('active');
+renderQuestion();
+renderMap();
+} else if (mode === 'result') {
+document.getElementById('viewResult').style.display = 'block';
+document.getElementById('quizFooter').style.display = 'none';
+}
+window.scrollTo(0,0);
+}
+
+function renderQuestion() {
+if(questions.length === 0) return;
+const q = questions[currentQuestion];
+const container = document.getElementById('quizContainer');
+const letters = ['A', 'B', 'C', 'D'];
+const ans = userAnswers[currentQuestion];
+let badgeClass = '';
+
+if(q.level === 'Fácil') badgeClass = 'dif-facil';
+else if(q.level === 'Médio') badgeClass = 'dif-medio';
+else badgeClass = 'dif-dificil';
+
+container.innerHTML = `
+<div class="card-content" style="border: 3px solid var(--border-color); box-shadow: 4px 4px 0px var(--border-color); padding: 15px; border-radius: 12px; background: white;">
+<span class="difficulty-badge ${badgeClass}">${q.level}</span>
+<div style="margin-bottom: 20px;">
+<span style="font-size: 0.8rem; font-weight: 800; color: var(--theme-dark);">QUESTÃO ${currentQuestion + 1} DE ${questions.length}</span>
+<h2 style="font-size: 1.15rem; margin-top: 5px; color: var(--text-color); font-weight: 900;">${q.text}</h2>
+</div>
+<div class="options-list">
+${q.options.map((opt, i) => {
+let cls = '';
+if (ans !== null) {
+if (i === q.correct) cls = 'correct';
+else if (i === ans) cls = 'wrong';
+else cls = 'disabled';
+}
+return `
+<button class="option-btn ${cls}" onclick="handleAnswer(${i})" ${ans !== null ? 'disabled' : ''}>
+<div class="opt-circle">${letters[i]}</div>
+<div>${opt}</div>
+</button>
+`}).join('')}
+</div>
+${ans !== null ? `
+<div class="feedback-box">
+<div class="feedback-title" style="color:${ans === q.correct ? 'var(--correct-border)' : 'var(--wrong-border)'}">
+${ans === q.correct ? '☑ Raciocínio Aprovado!' : '☒ Ops! Falha Detectada:'}
+</div>
+<div class="feedback-item correct-opt"><strong>A Verdade Histórica:</strong> ${q.options[q.correct]}</div>
+<div style="margin-top:10px; font-size:0.95rem; color:var(--text-color); margin-bottom:15px; font-weight:600;">
+${q.explanation.correct}
+</div>
+<div style="margin-top:15px; border-top:1px dashed var(--theme-light); padding-top:10px;">
+<small style="color:var(--theme-dark);"><strong>Diagnóstico das Rasteiras e Distratores:</strong></small>
+${q.explanation.options.map((exp, i) => i !== q.correct ? `<div class="feedback-item wrong-opt" style="margin-top:8px;"><strong>${letters[i]})</strong> ${exp}</div>` : '').join('')}
+</div>
+</div>
+` : ''}
+</div>
+`;
+updateNav();
+}
+
+function handleAnswer(idx) {
+if (userAnswers[currentQuestion] !== null) return;
+userAnswers[currentQuestion] = idx;
+localStorage.setItem(storageKey, JSON.stringify(userAnswers));
+
+if (idx === questions[currentQuestion].correct) {
+const duration = 1500;
+const end = Date.now() + duration;
+(function frame() {
+confetti({ particleCount: 5, angle: 60, spread: 55, origin: {x: 0, y: 0.6 }, colors: ['#9F1239', '#E11D48', '#1E293B', '#475569'] });
+confetti({ particleCount: 5, angle: 120, spread: 55, origin: {x: 1, y: 0.6}, colors: ['#9F1239', '#E11D48', '#1E293B', '#475569'] });
+if (Date.now() < end) { requestAnimationFrame(frame); }
+}());
+} else {
+const quizContainer = document.getElementById('quizContainer');
+quizContainer.classList.remove('shake-effect');
+void quizContainer.offsetWidth;
+quizContainer.classList.add('shake-effect');
+setTimeout(() => quizContainer.classList.remove('shake-effect'), 500);
+}
+renderQuestion();
+renderMap();
+}
+
+function renderMap() {
+if(questions.length === 0) return;
+const map = document.getElementById('qMap');
+map.innerHTML = questions.map((q, i) => {
+let cls = 'map-dot';
+if (i === currentQuestion) cls += ' active';
+if (userAnswers[i] !== null) {
+cls += userAnswers[i] === q.correct ? ' answered-correct' : ' answered-wrong';
+}
+return `<div class="${cls}" onclick="goTo(${i})">${i + 1}</div>`;
+}).join('');
+
+setTimeout(() => {
+const activeDot = map.querySelector('.map-dot.active');
+if (activeDot) {
+activeDot.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+}, 50);
+}
+
+function goTo(i) {
+if (window.confetti) confetti.reset();
+currentQuestion = i;
+renderQuestion();
+renderMap();
+}
+
+function changeQuestion(d) {
+let n = currentQuestion + d;
+if (n >= 0 && n < questions.length) goTo(n);
+}
+
+function updateNav() {
+document.getElementById('btnPrev').disabled = (currentQuestion === 0);
+const next = document.getElementById('btnNext');
+
+if (currentQuestion === questions.length - 1) {
+next.textContent = "Finalizar Diagnóstico";
+next.onclick = finish;
+} else {
+next.textContent = "Avançar";
+next.onclick = () => changeQuestion(1);
+}
+}
+
+function finish() {
+let correct = userAnswers.filter((a, i) => a === questions[i].correct).length;
+let percent = Math.round((correct / questions.length) * 100);
+
+if (window.confetti) confetti.reset();
+
+document.getElementById('finalPercent').textContent = percent + "%";
+document.getElementById('finalScoreText').textContent = `Você acertou ${correct} de ${questions.length} questões.`;
+document.getElementById('finalStars').textContent = percent >= 80 ? "★★★" : percent >= 60 ? "★★☆" : "★☆☆";
+
+let summary = '<div style="text-align:left; margin-top:20px;">';
+
+if (percent < 80) {
+summary += `
+<div style="background:var(--wrong-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--wrong-border); color:var(--wrong-border);">
+<strong>! Domínio Insuficiente!</strong> O seu desempenho não atingiu a nota de corte (80%). Atingir a pontuação mínima é obrigatório nesta prova. Revise a teoria com rigor antes de tentar novamente.
+</div>`;
+document.getElementById('action-buttons').innerHTML = '<button class="btn-action" onclick="reset()">Limpar Histórico e Refazer Prova</button>';
+} else {
+summary += `
+<div style="background:var(--correct-bg); padding:15px; border-radius:8px; margin-bottom:20px; border:2px solid var(--correct-border); color:var(--correct-border);">
+<strong>Excelente Desempenho!</strong> Você demonstrou uma base sólida e crítica sobre os fatos avaliados. A sua aprovação técnica está garantida neste módulo.
+</div>`;
+document.getElementById('action-buttons').innerHTML = '<button class="btn-action" onclick="reset()">Refazer Prova (Zerar Histórico)</button>';
+}
+
+if (correct < questions.length) {
+summary += '<h4 style="margin-bottom:10px; color:var(--text-color);">Relatório de Falhas e Correções:</h4>';
+questions.forEach((q, i) => {
+if(userAnswers[i] !== q.correct && userAnswers[i] !== null) {
+summary += `
+<div style="margin-bottom:10px; padding:15px; background:var(--white); border-radius:8px; border:2px dashed var(--theme-dark);">
+<strong style="color:var(--theme-dark);">Q${i+1}:</strong> ${q.text}<br>
+<span style="color:var(--wrong-border); font-size:0.9rem; font-weight:600; display:block; margin-top:5px;">Seu Erro: ${q.options[userAnswers[i]]}</span>
+<span style="color:var(--correct-border); font-size:0.9rem; font-weight:600; display:block; margin-top:2px;">A Verdade: ${q.options[q.correct]}</span>
+</div>`;
+}
+});
+}
+
+summary += '</div>';
+document.getElementById('review-container').innerHTML = summary;
+setMode('result');
+}
+
+function reset() {
+localStorage.removeItem(storageKey);
+userAnswers = new Array(questions.length).fill(null);
+currentQuestion = 0;
+setMode('practice');
+}
+
+setMode(userAnswers.some(ans => ans !== null) ? 'practice' : 'explanation');
+</script>
+</body>
+</html>
